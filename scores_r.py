@@ -1,7 +1,12 @@
+from statistics import median
+
 import pandas as pd
 #from ydata_profiling import ProfileReport
 
 from sklearn.model_selection import train_test_split
+from sklearn.pipeline import Pipeline
+from sklearn.impute import SimpleImputer
+from sklearn.preprocessing import StandardScaler, OrdinalEncoder
 data = pd.read_csv("StudentScore.xls")
 
 target = "writing score"
@@ -20,7 +25,21 @@ y = data[target]
 x_train, x_test, y_train, y_test = train_test_split(
     x, y, test_size=0.33, random_state=42)
 
+# num_transformer = Pipeline(steps= [("impute", SimpleImputer(strategy="median")),
+#                                    ("Standard Scaler", StandardScaler()),
+# ])
+education_levels = ["some high school", "high school", "some college", "associate's degree",
+                    "bachelor's degree", "master's degree"]
+ordinal_transformer = Pipeline(steps=[("impute", SimpleImputer(strategy="most_frequent")),
+                                      ("Scaler", OrdinalEncoder(categories=[education_levels]))
+                                      ])
 
+output = ordinal_transformer.fit_transform(x_train[["parental level of education"]])
 
+# Print train set before and after preprocessing
+for i, j in zip(x_train["parental level of education"].values, output):
+    print(f"Before: {i}. After: {j}")
+
+#print(x_train[["math score", "reading score"]].values)
 
 
