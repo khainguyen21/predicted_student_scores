@@ -25,9 +25,12 @@ y = data[target]
 x_train, x_test, y_train, y_test = train_test_split(
     x, y, test_size=0.33, random_state=42)
 
+# Create a Pipline to handle missing value by using median (most used because avoid outliers) and preprocessing data for numerical feature
 # num_transformer = Pipeline(steps= [("impute", SimpleImputer(strategy="median")),
 #                                    ("Standard Scaler", StandardScaler()),
 # ])
+
+# Create a Pipline to handle missing value by using most frequent with  encrypt ordinal feature
 education_levels = ["some high school", "high school", "some college", "associate's degree",
                     "bachelor's degree", "master's degree"]
 ordinal_transformer = Pipeline(steps=[("impute", SimpleImputer(strategy="most_frequent")),
