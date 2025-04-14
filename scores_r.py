@@ -78,7 +78,8 @@ params = {
     "regressor__n_estimators": [50, 100, 200],
     "regressor__criterion": ["squared_error", "absolute_error", "friedman_mse", "poisson"],
     "regressor__max_depth": [None, 2, 5],
-    #"preprocessors__num_transformer__impute__strategy" : ["mean", "median"]
+    "regressor__min_samples_split" : [2, 5, 10],
+    "preprocessors__num_transformer__impute__strategy" : ["mean", "median"]
 }
 
 model = RandomizedSearchCV(
